@@ -1,0 +1,1 @@
+This is a script application meant to read log files created by the Irssi IRC terminal chat program. This will also have support for other log formats as different strategies are created for the formats. My goal with this application is to make a cleaner version of what I had done with Java a few months back.
