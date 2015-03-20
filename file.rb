@@ -1,5 +1,7 @@
 #!/usr/bin/ruby -w
 
+require_relative 'hello world'
+
 counter = 1
 File.open("/home/sam/irclogs/freenodeSSL/busybear.log", "r") do |infile|
 	while (line = infile.gets)
@@ -7,3 +9,5 @@ File.open("/home/sam/irclogs/freenodeSSL/busybear.log", "r") do |infile|
 		counter = counter + 1
 	end
 end
+
+meth1
