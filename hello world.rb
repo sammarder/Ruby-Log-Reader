@@ -1,5 +1,7 @@
 #!/usr/bin/ruby -w
 
 def meth1
-	puts "hello world"
+	if 'hello world'[/hello/] != nil
+		puts "hello world"
+	end
 end
