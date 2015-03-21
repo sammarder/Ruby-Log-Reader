@@ -20,7 +20,7 @@ MONTHS = {
 }
 
 def get_month(month)
-  if (MONTHS.has_key?(month)
+  if MONTHS.has_key?(month)
     return MONTHS[month]
   else
     puts "Whoops somethign is bad with this month"
