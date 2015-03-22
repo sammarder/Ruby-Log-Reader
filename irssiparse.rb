@@ -34,8 +34,8 @@ def parse(line)
   if @fastforward
 # --- Log opened Sat Sep 06 18:28:43 2014
 #--- Day changed Sat Jan 25 2014
-    if /opened\s\w\w\w\s#{@month}\s#{@day}\s\d\d:\d\d:\d\d\s#{@year}/.match(line) || # is a good starting line
-       /Day\schanged\s\w\w\w\s#{@month}\s#{@day}\s#{@year}/.match(line)
+    if (/opened\s\w\w\w\s#{@month}\s#{@day}\s\d\d:\d\d:\d\d\s#{@year}/.match(line) || # is a good starting line
+       /Day\schanged\s\w\w\w\s#{@month}\s#{@day}\s#{@year}/.match(line))
       @play = true
       @fastforward = false
       puts line
@@ -44,7 +44,7 @@ def parse(line)
 #--- Day changed Sat Jan 25 2014
 # --- Log opened Sat Sep 06 18:28:43 2014
     #Check to see if it is 
-    if (!(/opened\s\w\w\w\s#{@month}\s#{@day}\s\d\d:\d\d:\d\d\s#{@year}/.match(line) &&  
+    if (!(/(opened|closed)\s\w\w\w\s#{@month}\s#{@day}\s\d\d:\d\d:\d\d\s#{@year}/.match(line) ||  
        /Day\schanged\s\w\w\w\s#{@month}\s#{@day}\s#{@year}/.match(line)) &&
        line[0,3] === "---") # To protect against normal lines
       @play = false
