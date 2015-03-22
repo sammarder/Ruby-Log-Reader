@@ -4,9 +4,9 @@ require_relative 'file'
 
 if ARGV.length == 4
   for i in 0..2 do
-    if ARGV[i] === '-f'
+    if ARGV[i] === '-f' || ARGV[i] === '-file'
       filename = ARGV[i + 1]
-    elsif ARGV[i] === '-d'
+    elsif ARGV[i] === '-d' || ARGV[i] === '-date'
       date = ARGV[i + 1]
     end 
   end
