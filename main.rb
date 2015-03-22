@@ -2,11 +2,18 @@
 
 require_relative 'file'
 
-
-#TODO figure out how to stream things through ruby!
-puts 'What file do you want to look into?'
-filename = gets.chomp
-puts 'What day do you want to look at? (MM/DD/YYYY)'
-date = gets.chomp
-File.open('/home/sam/irclogs/freenodeSSL/afusionrifle.log', "r")
-read_file(filename, date)#still need to determine more things
+if ARGV.length == 4
+  for i in 0..2 do
+    if ARGV[i] === '-f'
+      filename = ARGV[i + 1]
+    elsif ARGV[i] === '-d'
+      date = ARGV[i + 1]
+    end 
+  end
+else
+  puts 'What file do you want to look into?'
+  filename = gets.chomp
+  puts 'What day do you want to look at? (MM/DD/YYYY)'
+  date = gets.chomp
+end
+read_file(filename, date)
