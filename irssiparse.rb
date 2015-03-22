@@ -1,6 +1,6 @@
 #!/usr/bin/ruby -w
 
-# --- Log opened Sat Sep 06 18:28:43 2014
+# --- Log opened Sat Jan 06 18:28:43 2014
 #--- Day changed Sat Jan 25 2014
 #18:30 kubunto: but then again money is in streaming anyway
 
@@ -19,21 +19,41 @@ MONTHS = {
  '12' =>  'Dec',
 }
 
+@fastforward = true
+@play = false
+
 def get_month(month)
   if MONTHS.has_key?(month)
     return MONTHS[month]
   else
-    puts "Whoops somethign is bad with this month"
+    puts "Whoops something is bad with this month"
   end
 end 
 
 def parse(line)
-  isUseful = false
-  if line[/\d\d:\d\d [a-zA-Z]/]
-    puts "this line maches as a conversation line"
-  elsif line[/--- Log/]
-    puts 'this line matches as a log line'
-  end
+  if @fastforward
+# --- Log opened Sat Sep 06 18:28:43 2014
+#--- Day changed Sat Jan 25 2014
+    if line[/opened\s\w\w\w\s#{@month}\s#{@day}\s\d\d:\d\d:\d\d\s#{@year}/] || # is a good starting line
+       line[/Day\schanged\s\w\w\w\s#{@month}\s#{@day}\s#{@year}/]
+      @play = true
+      @fastforward = false
+      puts line
+    end
+  elsif @play
+#--- Day changed Sat Jan 25 2014
+# --- Log opened Sat Sep 06 18:28:43 2014
+    if !(line[/opened\s\w\w\w\s#{@month}\s#{@day}\s\d\d:\d\d:\d\d\s#{@year}/] &&  #is not the last line
+       line[/Day\schanged\s\w\w\w\s#{@month}\s#{@day}\s#{@year}/])
+      puts line
+    else
+      @play = false
+    end
+  end  
+end
+
+def get_state
+  return @play || @fastforward
 end
 
 def parse_date(date)

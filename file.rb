@@ -2,8 +2,8 @@
 
 require_relative 'irssiparse'
 
-def readfile(filename, date)
-  parsedate(date)
+def read_file(filename, date)
+  parse_date(date)
   File.open(filename, "r") do |infile|
     while (line = infile.gets)
       parse(line)

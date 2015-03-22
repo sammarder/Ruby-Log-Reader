@@ -9,4 +9,4 @@ filename = gets.chomp
 puts 'What day do you want to look at? (MM/DD/YYYY)'
 date = gets.chomp
 File.open('/home/sam/irclogs/freenodeSSL/afusionrifle.log', "r")
-readfile(filename, date)#still need to determine more things
+read_file(filename, date)#still need to determine more things
