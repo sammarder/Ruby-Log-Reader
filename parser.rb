@@ -4,58 +4,44 @@
 #--- Day changed Sat Jan 25 2014
 #18:30 kubunto: but then again money is in streaming anyway
 
+require 'date'
 
 class Parser
-  MONTHS = {
-   '01' =>  'Jan',
-
-
-
-
-   '02' =>  'Feb',
-   '03' =>  'Mar',
-   '04' =>  'Apr',
-   '05' =>  'May',
-   '06' =>  'Jun',
-   '07' =>  'Jul',
-   '08' =>  'Aug',
-   '09' =>  'Sep',
-   '10' =>  'Oct',
-   '11' =>  'Nov',
-   '12' =>  'Dec',
-  }
-
   def initialize
     @fastforward = true
     @play = false
-    puts 'initialized'
   end
 
-  def get_month(month)
-    if MONTHS.has_key?(month)
-      return MONTHS[month]
-    else
-      puts "Whoops something is bad with this month"
-    end
-  end 
-
   def parse(line)
-    if @fastforward
-      if (/opened\s\w\w\w\s#{@month}\s#{@day}\s\d\d:\d\d:\d\d\s#{@year}/.match(line) || # is a good starting line
-         /Day\schanged\s\w\w\w\s#{@month}\s#{@day}\s#{@year}/.match(line))
-        @play = true
-        @fastforward = false
-        puts line
-      end
+    date = get_date(line)
+    if date === @date && @fastforward
+      @play = true
+      @fastforward = false
+      puts line
     elsif @play
-      if (!(/(opened|closed)\s\w\w\w\s#{@month}\s#{@day}\s\d\d:\d\d:\d\d\s#{@year}/.match(line) ||  
-       /Day\schanged\s\w\w\w\s#{@month}\s#{@day}\s#{@year}/.match(line)) &&
-         line[0,3] === "---") # To protect against normal lines
+      if date != nil && date != @date
         @play = false
       else
-        puts line      
+        puts line
+      end      
+    end
+  end
+
+  def get_date(line)
+    date = nil
+    if line[0,3] === "---"
+      if line["opened"] != nil
+        string = line.split("opened ")[1]
+        date = Date.strptime(string, '%a %b %d %H:%M:%S %Y')
+      elsif line["closed"] != nil
+        string = line.split("closed ")[1]
+        date = Date.strptime(string, '%a %b %d %H:%M:%S %Y')
+      elsif line["changed"] != nil
+        string = line.split("changed ")[1]
+        date = Date.strptime(string, '%a %b %d %Y')
       end
-    end  
+    end
+    return date
   end
 
   def get_state
@@ -63,11 +49,6 @@ class Parser
   end
 
   def parse_date(date)
-    values = date.split('/')
-    if values.length == 3
-      @month = get_month(values[0])
-      @day = values[1]
-      @year = values[2]
-    end
+    @date = Date.strptime(date, "%m/%d/%Y")
   end
 end
