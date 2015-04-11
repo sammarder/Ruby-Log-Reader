@@ -23,7 +23,7 @@ class Parser
 
   @fastforward = true
   @play = false
-  def self.get_month(month)
+  def get_month(month)
     if MONTHS.has_key?(month)
       return MONTHS[month]
     else
@@ -31,7 +31,7 @@ class Parser
     end
   end 
 
-  def self.parse(line)
+  def parse(line)
     if @fastforward
       if (/opened\s\w\w\w\s#{@month}\s#{@day}\s\d\d:\d\d:\d\d\s#{@year}/.match(line) || # is a good starting line
          /Day\schanged\s\w\w\w\s#{@month}\s#{@day}\s#{@year}/.match(line))
@@ -50,11 +50,11 @@ class Parser
     end  
   end
 
-  def self.get_state
+  def get_state
     return @play || @fastforward
   end
 
-  def self.parse_date(date)
+  def parse_date(date)
     values = date.split('/')
     if values.length == 3
       @month = get_month(values[0])

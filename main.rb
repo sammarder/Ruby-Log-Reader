@@ -16,4 +16,5 @@ else
   puts 'What day do you want to look at? (MM/DD/YYYY)'
   date = gets.chomp
 end
-Fileparser.read_file(filename, date)
+fp = Fileparser.new
+fp.read_file(filename, date)

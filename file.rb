@@ -7,7 +7,7 @@ class Fileparser
     @parser = Parse.new
   end 
 
-  def self.read_file(filename, date)
+  def read_file(filename, date)
     @parser.parse_date(date)
     File.open(filename, "r") do |infile|
       while (line = infile.gets)
