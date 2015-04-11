@@ -1,6 +1,6 @@
 #!/usr/bin/ruby -w
 
-require_relative 'file'
+require_relative 'fileparser'
 
 if ARGV.length == 4
   for i in 0..2 do

@@ -8,6 +8,10 @@
 class Parser
   MONTHS = {
    '01' =>  'Jan',
+
+
+
+
    '02' =>  'Feb',
    '03' =>  'Mar',
    '04' =>  'Apr',
@@ -21,9 +25,10 @@ class Parser
    '12' =>  'Dec',
   }
 
-  def new
+  def initialize
     @fastforward = true
     @play = false
+    puts 'initialized'
   end
 
   def get_month(month)
