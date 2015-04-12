@@ -44,7 +44,9 @@ class Parser
       end
       format = (line["opened "] != nil || 
           line["closed "] != nil) ? OC_FORMAT : DC_FORMAT
-      date = Date.strptime(source, format)
+      if source != nil
+        date = Date.strptime(source, format)
+      end
     end
     return date
   end
