@@ -7,6 +7,10 @@
 require 'date'
 
 class Parser
+  OC_FORMAT = '%a %b %d %H:%M:%S %Y'
+  DC_FORMAT = '%a %b %d %Y'
+  D_FORMAT = '%m/%d/%Y'
+  
   def initialize
     @fastforward = true
     @play = false
@@ -30,16 +34,17 @@ class Parser
   def get_date(line)
     date = nil
     if line[0,3] === "---"
-      if line["opened"] != nil
-        string = line.split("opened ")[1]
-        date = Date.strptime(string, '%a %b %d %H:%M:%S %Y')
-      elsif line["closed"] != nil
-        string = line.split("closed ")[1]
-        date = Date.strptime(string, '%a %b %d %H:%M:%S %Y')
-      elsif line["changed"] != nil
-        string = line.split("changed ")[1]
-        date = Date.strptime(string, '%a %b %d %Y')
+      source = nil
+      if line["opened "] != nil
+        source = line.split("opened ")[1]        
+      elsif line["closed "] != nil
+        source = line.split("closed ")[1]
+      elsif line["changed "] != nil
+        source = line.split("changed ")[1]
       end
+      format = (line["opened "] != nil || 
+          line["closed "] != nil) ? OC_FORMAT : DC_FORMAT
+      date = Date.strptime(source, format)
     end
     return date
   end
@@ -49,6 +54,6 @@ class Parser
   end
 
   def parse_date(date)
-    @date = Date.strptime(date, "%m/%d/%Y")
+    @date = Date.strptime(date, D_FORMAT)
   end
 end
