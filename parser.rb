@@ -10,7 +10,10 @@ class Parser
   OC_FORMAT = '%a %b %d %H:%M:%S %Y'
   DC_FORMAT = '%a %b %d %Y'
   D_FORMAT = '%m/%d/%Y'
-  
+  OPEN = "opened "  
+  CLOSE = "closed "
+  CHANGE = "changed "
+
   def initialize
     @fastforward = true
     @play = false
@@ -35,15 +38,15 @@ class Parser
     date = nil
     if line[0,3] === "---"
       source = nil
-      if line["opened "] != nil
-        source = line.split("opened ")[1]        
-      elsif line["closed "] != nil
-        source = line.split("closed ")[1]
-      elsif line["changed "] != nil
-        source = line.split("changed ")[1]
+      if line[OPEN] != nil
+        source = line.split(OPEN)[1]        
+      elsif line[CLOSE] != nil
+        source = line.split(CLOSE)[1]
+      elsif line[CHANGE] != nil
+        source = line.split(CHANGE)[1]
       end
-      format = (line["opened "] != nil || 
-          line["closed "] != nil) ? OC_FORMAT : DC_FORMAT
+      format = (line[OPEN] != nil || 
+          line[CLOSE] != nil) ? OC_FORMAT : DC_FORMAT
       if source != nil
         date = Date.strptime(source, format)
       end
