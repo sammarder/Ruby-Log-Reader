@@ -10,9 +10,9 @@ class Parser
   OC_FORMAT = '%a %b %d %H:%M:%S %Y'
   DC_FORMAT = '%a %b %d %Y'
   D_FORMAT = '%m/%d/%Y'
-  OPEN = "opened "  
-  CLOSE = "closed "
-  CHANGE = "changed "
+  OPEN = "Log opened "  
+  CLOSE = "Log closed "
+  CHANGE = "Day changed "
 
   def initialize
     @fastforward = true
@@ -35,30 +35,34 @@ class Parser
   end
 
   def get_date(line)
-    date = nil
-    if line[0,3] === "---"
-      source = nil
-      if line[OPEN] != nil
-        source = line.split(OPEN)[1]        
-      elsif line[CLOSE] != nil
-        source = line.split(CLOSE)[1]
-      elsif line[CHANGE] != nil
-        source = line.split(CHANGE)[1]
-      end
-      format = (line[OPEN] != nil || 
-          line[CLOSE] != nil) ? OC_FORMAT : DC_FORMAT
-      if source != nil
-        date = Date.strptime(source, format)
-      end
+    if line[0,3] != "---"
+      return nil
     end
-    return date
+    source = get_source(line)
+    format = (line[OPEN] != nil || 
+        line[CLOSE] != nil) ? OC_FORMAT : DC_FORMAT
+    if source != nil
+      return Date.strptime(source, format)
+    end
+    return nil
+  end
+
+  def get_source(line)
+    if line[OPEN] != nil
+      return line.split(OPEN)[1]        
+    elsif line[CLOSE] != nil
+      return line.split(CLOSE)[1]
+    elsif line[CHANGE] != nil
+      return line.split(CHANGE)[1]
+    end
+    return nil
   end
 
   def get_state
     return @play || @fastforward
   end
 
-  def parse_date(date)
-    @date = Date.strptime(date, D_FORMAT)
+  def set_date(date)
+    @date = date
   end
 end
