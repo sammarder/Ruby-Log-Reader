@@ -13,6 +13,10 @@ class Fileparser
 
   def read_file(filename, date)
     parse_date(date)
+    if !File.exist?(filename)
+      puts 'This file does not exist'
+      return
+    end
     File.open(filename, "r") do |infile|
       while (line = infile.gets)
         if !@parser.get_state
