@@ -34,6 +34,7 @@ class Parser
     end
   end
 
+  #once function finishes, it automatically returns nil
   def get_date(line)
     if line[0,3] != "---"
       return nil
@@ -44,7 +45,6 @@ class Parser
     if source != nil
       return Date.strptime(source, format)
     end
-    return nil
   end
 
   def get_source(line)
@@ -55,7 +55,6 @@ class Parser
     elsif line[CHANGE] != nil
       return line.split(CHANGE)[1]
     end
-    return nil
   end
 
   def get_state
