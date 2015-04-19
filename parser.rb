@@ -36,9 +36,7 @@ class Parser
 
   #once function finishes, it automatically returns nil
   def get_date(line)
-    if line[0,3] != "---"
-      return nil
-    end
+    return unless line.starts_with?('---')
     source = get_source(line)
     format = (line[OPEN] != nil || 
         line[CLOSE] != nil) ? OC_FORMAT : DC_FORMAT
@@ -57,7 +55,7 @@ class Parser
     end
   end
 
-  def get_state
+  def state
     return @play || @fastforward
   end
 

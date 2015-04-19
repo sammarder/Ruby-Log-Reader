@@ -19,7 +19,7 @@ class Fileparser
     end
     File.open(filename, "r") do |infile|
       while (line = infile.gets)
-        if !@parser.get_state
+        if !@parser.state
           break
         end
         @parser.parse(line)
