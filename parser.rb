@@ -26,7 +26,7 @@ class Parser
       @fastforward = false
       puts line
     elsif @play
-      if date != nil && date != @date
+      if date && date != @date
         @play = false
       else
         puts line
@@ -38,19 +38,18 @@ class Parser
   def get_date(line)
     return unless line.starts_with?('---')
     source = get_source(line)
-    format = (line[OPEN] != nil || 
-        line[CLOSE] != nil) ? OC_FORMAT : DC_FORMAT
-    if source != nil
+    format = (line[OPEN] || line[CLOSE]) ? OC_FORMAT : DC_FORMAT
+    if source
       return Date.strptime(source, format)
     end
   end
 
   def get_source(line)
-    if line[OPEN] != nil
+    if line[OPEN]
       return line.split(OPEN)[1]        
-    elsif line[CLOSE] != nil
+    elsif line[CLOSE]
       return line.split(CLOSE)[1]
-    elsif line[CHANGE] != nil
+    elsif line[CHANGE]
       return line.split(CHANGE)[1]
     end
   end
